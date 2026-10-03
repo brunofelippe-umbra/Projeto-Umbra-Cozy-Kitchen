@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://baetu24i56ca4"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yf5fn"]
+friction = 0.8
+
+[sub_resource type="SphereMesh" id="SphereMesh_n1kck"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3mcny"]
+
+[node name="OBJ_TestPhysics" type="RigidBody3D" unique_id=565601191]
+physics_material_override = SubResource("PhysicsMaterial_yf5fn")
+linear_damp = 3.0
+angular_damp = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1332078092]
+mesh = SubResource("SphereMesh_n1kck")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=482306035]
+shape = SubResource("SphereShape3D_3mcny")

@@ -22,6 +22,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head" unique_id=1116765672]
 
+[node name="RayCast3D" type="RayCast3D" parent="Head/Camera3D" unique_id=1729301423]
+target_position = Vector3(0, 0, -3)
+
+[node name="Marker3D" type="Marker3D" parent="Head/Camera3D" unique_id=1168646313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5)
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1162127497]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
 mesh = SubResource("CapsuleMesh_g4v7s")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1245451158]
+
+[node name="Label" type="Label" parent="CanvasLayer" unique_id=431104594]
+visible = false
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Precione E para pegar "
