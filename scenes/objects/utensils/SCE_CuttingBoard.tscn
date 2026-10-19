@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://sdlobwphbdx"]
+
+[ext_resource type="Script" uid="uid://dlsa18j6b4hk" path="res://scripts/kitchen/SCR_CuttingBoard.gd" id="1_s6x38"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x4ho1"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_x4ho1")
+size = Vector3(0.8, 0.06, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yf5fn"]
+size = Vector3(0.8, 0.06, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
+size = Vector3(0.75, 0.3, 0.45)
+
+[node name="CuttingBoard" type="StaticBody3D" unique_id=604922739]
+script = ExtResource("1_s6x38")
+
+[node name="BoardMesh" type="MeshInstance3D" parent="." unique_id=131197900]
+mesh = SubResource("BoxMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=748011931]
+shape = SubResource("BoxShape3D_yf5fn")
+
+[node name="IngredientDetection" type="Area3D" parent="." unique_id=877741295]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="IngredientDetection" unique_id=115842725]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, 0)
+shape = SubResource("BoxShape3D_g4v7s")

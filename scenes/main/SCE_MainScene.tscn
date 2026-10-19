@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://cbkyhumfc0u10"]
 
 [ext_resource type="PackedScene" uid="uid://dgfr7rpf1w0g2" path="res://scenes/player/SCE_Player.tscn" id="1_8c5e8"]
-[ext_resource type="PackedScene" uid="uid://baetu24i56ca4" path="res://scenes/objects/SCE_TestPhysics.tscn" id="2_6ehao"]
+[ext_resource type="PackedScene" uid="uid://d0ag6yfmmbc65" path="res://scenes/objects/ingredients/SCE_Carrot.tscn" id="2_3rcts"]
+[ext_resource type="PackedScene" uid="uid://db5x4oe0600te" path="res://scenes/objects/ingredients/SCE_Tomato.tscn" id="2_6ehao"]
+[ext_resource type="PackedScene" uid="uid://dpa8tdhk4ijy6" path="res://scenes/kitchen/SCE_KitchenTable.tscn" id="4_bufkh"]
+[ext_resource type="PackedScene" uid="uid://sdlobwphbdx" path="res://scenes/objects/utensils/SCE_CuttingBoard.tscn" id="5_icrxf"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4v7s"]
 
@@ -24,5 +27,14 @@ mesh = SubResource("BoxMesh_yf5fn")
 
 [node name="Player" parent="." unique_id=487947961 instance=ExtResource("1_8c5e8")]
 
-[node name="OBJ_TestPhysics" parent="." unique_id=565601191 groups=["pegavel"] instance=ExtResource("2_6ehao")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.06536603, 4.7045355, -5.1687655)
+[node name="Carrot" parent="." unique_id=565601191 instance=ExtResource("2_3rcts")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9022472, -5.543045)
+
+[node name="Tomato" parent="." unique_id=603726326 instance=ExtResource("2_6ehao")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6723742, -3.713283)
+
+[node name="KitchenTable" parent="." unique_id=1838080727 instance=ExtResource("4_bufkh")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0693742, -2.3504465)
+
+[node name="CuttingBoard" parent="." unique_id=604922739 instance=ExtResource("5_icrxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.95955336, -2.4651656)

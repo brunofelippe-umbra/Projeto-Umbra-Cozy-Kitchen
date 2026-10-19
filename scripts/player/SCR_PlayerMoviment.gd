@@ -1,3 +1,4 @@
+
 extends CharacterBody3D
 
 const SPEED = 5.0
@@ -5,7 +6,10 @@ const MOUSE_SENSITIVITY = 0.002
 const PUSH_FORCE = 2.0
 const THROW_FORCE = 3.0
 
-var objeto_seguro = null
+# Quanto da velocidade do jogador o objeto herda
+const DROP_VELOCITY_MULTIPLIER = 1.0
+
+var objeto_seguro: RigidBody3D = null
 
 @onready var head = $Head
 @onready var raycast = $Head/Camera3D/RayCast3D
@@ -34,19 +38,13 @@ func _unhandled_input(event):
 		if event.keycode == KEY_ESCAPE:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-	# JOGAR OBJETO COM BOTÃO ESQUERDO
+	# ARREMESSAR OBJETO
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			if objeto_seguro != null:
-				var objeto = objeto_seguro
-
-				objeto_seguro = null
-				objeto.reparent(get_tree().current_scene, true)
-				objeto.freeze = false
-
 				var direcao = -$Head/Camera3D.global_transform.basis.z
 
-				objeto.apply_central_impulse(
+				soltar_objeto(
 					direcao * THROW_FORCE
 				)
 
@@ -90,19 +88,23 @@ func _physics_process(delta):
 		var collider = collision.get_collider()
 
 		if collider is RigidBody3D:
+			if collider == objeto_seguro:
+				continue
+
 			var push_direction = -collision.get_normal()
 			push_direction.y = 0
 
-			collider.apply_central_impulse(
-				push_direction.normalized() * PUSH_FORCE
-			)
+			if push_direction.length_squared() > 0:
+				collider.apply_central_impulse(
+					push_direction.normalized() * PUSH_FORCE
+				)
 
 	# MOSTRAR MENSAGEM
 	if objeto_seguro == null:
 		if raycast.is_colliding():
 			var objeto = raycast.get_collider()
 
-			if objeto.is_in_group("pegavel"):
+			if objeto is RigidBody3D and objeto.is_in_group("pegavel"):
 				mensagem_pegar.visible = true
 			else:
 				mensagem_pegar.visible = false
@@ -114,23 +116,58 @@ func _physics_process(delta):
 	# PEGAR / SOLTAR COM E
 	if Input.is_action_just_pressed("interagir"):
 		if objeto_seguro != null:
-			# SOLTAR
-			var objeto = objeto_seguro
-
-			objeto_seguro = null
-			objeto.reparent(get_tree().current_scene, true)
-			objeto.freeze = false
-
+			soltar_objeto()
 		else:
-			# PEGAR
 			if raycast.is_colliding():
 				var objeto = raycast.get_collider()
 
-				if objeto.is_in_group("pegavel"):
-					objeto_seguro = objeto
+				if objeto is RigidBody3D and objeto.is_in_group("pegavel"):
+					pegar_objeto(objeto)
 
-					objeto.freeze = true
-					objeto.reparent(hold_point, true)
 
-					objeto.position = Vector3.ZERO
-					objeto.rotation = Vector3.ZERO
+func pegar_objeto(objeto: RigidBody3D):
+	objeto_seguro = objeto
+
+	objeto.freeze = true
+	objeto.linear_velocity = Vector3.ZERO
+	objeto.angular_velocity = Vector3.ZERO
+
+	objeto.reparent(hold_point, true)
+
+	# POSIÇÃO E ROTAÇÃO PERSONALIZADAS
+	if objeto is HoldableObject:
+		objeto.position = objeto.hold_position
+		objeto.rotation_degrees = objeto.hold_rotation
+	else:
+		# Compatibilidade com objetos antigos
+		objeto.position = Vector3.ZERO
+		objeto.rotation = Vector3.ZERO
+
+
+func soltar_objeto(impulso: Vector3 = Vector3.ZERO):
+	if objeto_seguro == null:
+		return
+
+	var objeto = objeto_seguro
+	objeto_seguro = null
+
+	# Preservar a posição mundial do objeto
+	objeto.reparent(get_tree().current_scene, true)
+
+	# Capturar a velocidade real do jogador
+	var velocidade_jogador = get_real_velocity()
+
+	# Reativar a física
+	objeto.freeze = false
+	objeto.sleeping = false
+
+	# Aplicar a velocidade herdada
+	objeto.linear_velocity = (
+		velocidade_jogador * DROP_VELOCITY_MULTIPLIER
+	)
+
+	objeto.angular_velocity = Vector3.ZERO
+
+	# Aplicar impulso somente quando arremessado
+	if impulso.length_squared() > 0:
+		objeto.apply_central_impulse(impulso)
