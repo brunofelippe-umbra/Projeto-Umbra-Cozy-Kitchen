@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d0ag6yfmmbc65"]
 
 [ext_resource type="Script" uid="uid://bc6lrvxftfxne" path="res://scripts/objects/SCR_HoldableObject.gd" id="1_fhwr4"]
+[ext_resource type="Resource" uid="uid://ba26vsgfihriy" path="res://resources/ingredients/RES_Carrot.tres" id="2_1vom8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yf5fn"]
 friction = 0.8
@@ -34,6 +35,7 @@ angular_damp = 4.0
 script = ExtResource("1_fhwr4")
 hold_position = Vector3(0.15, -0.1, 0)
 hold_rotation = Vector3(0, 0, 90)
+ingredient_data = ExtResource("2_1vom8")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1332078092]
 mesh = SubResource("CylinderMesh_m58a0")

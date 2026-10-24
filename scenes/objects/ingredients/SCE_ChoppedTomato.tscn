@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://dtibn476y2p8s"]
+
+[ext_resource type="Script" uid="uid://bc6lrvxftfxne" path="res://scripts/objects/SCR_HoldableObject.gd" id="1_lsnnm"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yf5fn"]
+friction = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j5ngx"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_n1kck"]
+material = SubResource("StandardMaterial3D_j5ngx")
+radius = 0.35
+height = 0.6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yf5fn"]
+albedo_color = Color(0.21960784, 0.5568628, 0.23529412, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
+material = SubResource("StandardMaterial3D_yf5fn")
+radius = 0.15
+height = 0.06
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3mcny"]
+radius = 0.35
+
+[node name="ChoppedTomato" type="RigidBody3D" unique_id=565601191 groups=["pegavel"]]
+physics_material_override = SubResource("PhysicsMaterial_yf5fn")
+linear_damp = 3.0
+angular_damp = 4.0
+script = ExtResource("1_lsnnm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1332078092]
+mesh = SubResource("SphereMesh_n1kck")
+
+[node name="TomatoLeaves" type="MeshInstance3D" parent="MeshInstance3D" unique_id=1997099143]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+mesh = SubResource("SphereMesh_g4v7s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=482306035]
+shape = SubResource("SphereShape3D_3mcny")

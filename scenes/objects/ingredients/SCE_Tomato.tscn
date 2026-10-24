@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://db5x4oe0600te"]
 
 [ext_resource type="Script" uid="uid://bc6lrvxftfxne" path="res://scripts/objects/SCR_HoldableObject.gd" id="1_sokwv"]
+[ext_resource type="Resource" uid="uid://cb1hq8vj7aw2q" path="res://resources/ingredients/RES_Tomato.tres" id="2_uq0r7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_yf5fn"]
 friction = 0.8
@@ -29,6 +30,7 @@ physics_material_override = SubResource("PhysicsMaterial_yf5fn")
 linear_damp = 3.0
 angular_damp = 4.0
 script = ExtResource("1_sokwv")
+ingredient_data = ExtResource("2_uq0r7")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1332078092]
 mesh = SubResource("SphereMesh_n1kck")

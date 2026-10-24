@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="IngredientData" format=3 uid="uid://ba26vsgfihriy"]
+
+[ext_resource type="Script" uid="uid://dp5yqk86vyrel" path="res://scripts/kitchen/SCR_IngredientData.gd" id="1_7wrjx"]
+
+[resource]
+script = ExtResource("1_7wrjx")
+ingredient_id = &"carrot"
+display_name = "Carrot"
+can_be_cut = true
+metadata/_custom_type_script = "uid://dp5yqk86vyrel"
